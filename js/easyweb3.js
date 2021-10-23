@@ -3,30 +3,31 @@ function isMetamaskInstall(){
 	// check brower is or not install metamask
 	if (typeof window.ethereum !== 'undefined') {
 		console.log('MetaMask is installed!');
-		return True;
+		return 0;
 	}
 }
 
-function connectMeta(){
+async function connectMeta(){
 	ethereum.request({ method: 'eth_requestAccounts' });
 }
 
-function getAccount(){
+async function getAccount(){
 	const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
 	const account = accounts[0];
+	showAccount.innerHTML = account;
 	return account
 }
 
-function chainChange(_chainId){
+async function chainChange(_chainId){
 	ethereum.on('chainChanged', (_chainId) => window.location.reload());
 }
 
-function chainId(){
+async function chainId(){
 	const chainId = await ethereum.request({ method: 'eth_chainId' });
 	return chainId;
 }
 
-function ethRequest(etype, eargs, resex, errex){
+async function ethRequest(etype, eargs, resex, errex){
 	ethereum.request({
     	method: etype,
     	eargs,
@@ -38,4 +39,5 @@ function ethRequest(etype, eargs, resex, errex){
     	// If the request fails, the Promise will reject with an error.
  	});
 }
+
 
